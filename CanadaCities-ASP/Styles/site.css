@@ -1,0 +1,9 @@
+﻿body {
+
+    background-image: url('../Images/toronto.jpg');
+    background-size: cover;
+}
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
