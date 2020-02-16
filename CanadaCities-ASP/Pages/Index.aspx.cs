@@ -33,17 +33,14 @@ namespace CanadaCities_ASP.Pages
             }
         }
 
-        public void GetCities()
-        {
-            List<CityInfo> cities = new List<CityInfo>();
-            foreach (KeyValuePair<string, CityInfo> kvp in Statistics.CityCatalogue)
-            {
-                CitiesList.Add(kvp.Value);
-            }
-        }
-
-
-
+        //public void GetCities()
+        //{
+        //    List<CityInfo> cities = new List<CityInfo>();
+        //    foreach (KeyValuePair<string, CityInfo> kvp in Statistics.CityCatalogue)
+        //    {
+        //        CitiesList.Add(kvp.Value);
+        //    }
+        //}
         protected void BindGrids()
         {
             if(CitiesList.Count > 0)
@@ -58,6 +55,12 @@ namespace CanadaCities_ASP.Pages
             }
         }
 
+        private void ShowError()
+        {
+            ErrorLabel.Text = "*Must Select a file type!";
+            ErrorLabel.CssClass += "text-danger ";
+            ErrorLabel.Visible = true;
+        }
 
         #region Events
 
@@ -65,30 +68,47 @@ namespace CanadaCities_ASP.Pages
         protected void DisplayCitiesButton_OnClick(object sender, EventArgs e)
         {
 
-            CitiesList = new List<CityInfo>();
-            CitiesList.Add(statistics.DisplayCityInformation(CityTextBox.Text));
-            BindGrids();
+            if(FileTypeRadioList.SelectedIndex != -1 && !string.IsNullOrWhiteSpace(CityTextBox.Text))
+            {
+                CitiesList = new List<CityInfo>();
+                CitiesList.Add(statistics.DisplayCityInformation(CityTextBox.Text));
+                BindGrids();
+                GridLabel.Text = $"City Info for {CityTextBox.Text}: ";
+                CitiesGrid.Visible = true;
+                ProvincesGrid.Visible = false;
+                PopModal();
+            }
+            else
+            {
+                ShowError();
+            }
         }
 
         protected void CalculateDistanceButton_OnClick(object sender, EventArgs e)
         {
             double distance = 0.0;
-            if (!string.IsNullOrWhiteSpace(OriginCityTextBox.Text) && !string.IsNullOrWhiteSpace(DestinationCityTextBox.Text))
+            if (FileTypeRadioList.SelectedIndex != -1 && !string.IsNullOrWhiteSpace(OriginCityTextBox.Text) && !string.IsNullOrWhiteSpace(DestinationCityTextBox.Text))
             {
                 distance = statistics.CalculateDistanceBetweenCities(OriginCityTextBox.Text, DestinationCityTextBox.Text);
+                GridLabel.Text = $"From {OriginCityTextBox.Text} to {DestinationCityTextBox.Text} - Distance = {distance} KM";
+                CitiesGrid.Visible = false;
+                ProvincesGrid.Visible = false;
+                PopModal();
             }
-            DistanceLabel.Text = $"From {OriginCityTextBox.Text} to {DestinationCityTextBox.Text} - Distance = {distance}";
-            DistanceLabel.Visible = true;
-            GridLabel.Text = "Distance: ";
+            else
+            {
+                ShowError();
+            }
+
             //show distance
         }
 
         protected void DisplayProvinceButton_Click(object sender, EventArgs e)
         {
             string method = ProvincialMethodChoice.SelectedValue;
-            //List<CityInfo> cities = new List<CityInfo>();
+
             CitiesList = new List<CityInfo>();
-            if (ProvincesDropDown.SelectedIndex != -1)
+            if (FileTypeRadioList.SelectedIndex != -1 && ProvincesDropDown.SelectedIndex != -1)
             {
                 switch (method)
                 {
@@ -96,31 +116,52 @@ namespace CanadaCities_ASP.Pages
                         CitiesList.Add(statistics.DisplayLargestPopulationCity(ProvincesDropDown.SelectedItem.ToString()));
                         BindGrids();
                         GridLabel.Text = $"Largest population city in {ProvincesDropDown.SelectedItem.ToString()}: ";
+                        CitiesGrid.Visible = true;
+                        ProvincesGrid.Visible = false;
                         break;
                     case "Smallest":
                         CitiesList.Add(statistics.DisplaySmallestPopulation(ProvincesDropDown.SelectedItem.ToString()));
                         BindGrids();
                         GridLabel.Text = $"Smallest population city in {ProvincesDropDown.SelectedItem.ToString()}: ";
+                        CitiesGrid.Visible = true;
+                        ProvincesGrid.Visible = false;
                         break;
                     case "TotalPop":
+                        GridLabel.Text = $"Total Population of {ProvincesDropDown.SelectedItem.ToString()} is {statistics.DisplayProvincePopulation(ProvincesDropDown.SelectedItem.ToString())}";
+                        CitiesGrid.Visible = false;
+                        ProvincesGrid.Visible = false;
                         break;
-
                 }
+                PopModal();
             }
+            else
+            {
+                ShowError();
+            }
+
+           
         }
 
         #endregion
 
         protected void ComparePopulationsButton_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(OriginCityTextBox.Text) && !string.IsNullOrWhiteSpace(DestinationCityTextBox.Text))
+            if (FileTypeRadioList.SelectedIndex != -1 && !string.IsNullOrWhiteSpace(OriginCityTextBox.Text) && !string.IsNullOrWhiteSpace(DestinationCityTextBox.Text))
             {
                 CitiesList = new List<CityInfo>();
                 CitiesList.Add(statistics.CompareCitiesPopulation(OriginCityTextBox.Text, DestinationCityTextBox.Text));
                 BindGrids();
                 GridLabel.Text = $"Larger City between : {OriginCityTextBox.Text} and {DestinationCityTextBox.Text}: ";
-            }
 
+                CitiesGrid.Visible = true;
+                ProvincesGrid.Visible = false;
+                PopModal();
+            }
+            else
+            {
+                ShowError();
+            }
+            
         }
 
         protected void FileTypeRadioList_SelectedIndexChanged(object sender, EventArgs e)
@@ -139,19 +180,49 @@ namespace CanadaCities_ASP.Pages
                     break;
             }
             statistics = new Statistics($"D:\\School\\CanadaCities-ASP\\CanadaCities-ASP\\CanadaCities-ASP\\Data\\{FileName}", FileType);
+            ErrorLabel.Visible = false;
+        }
 
+        private void PopModal()
+        {
+            ErrorLabel.Visible = false;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true);
         }
 
         protected void ProvincesByPopulation_Click(object sender, EventArgs e)
         {
-            ProvinceList = statistics.RankProvincesByPopulation().ToList();
-            BindGrids();
+            if (FileTypeRadioList.SelectedIndex != -1)
+            {
+                ProvinceList = statistics.RankProvincesByPopulation().ToList();
+                BindGrids();
+                ProvincesGrid.Visible = true;
+                CitiesGrid.Visible = false;
+                GridLabel.Text = "Provinces Ranked by population: ";
+                PopModal();
+            }
+            else
+            {
+                ShowError();
+            }
+
+
         }
 
         protected void ProvincesByCities_Click(object sender, EventArgs e)
         {
-            ProvinceList = statistics.RankProvincesByCities().ToList();
-            BindGrids();
+            if (FileTypeRadioList.SelectedIndex != -1)
+            {
+                ProvinceList = statistics.RankProvincesByCities().ToList();
+                BindGrids();
+                ProvincesGrid.Visible = true;
+                CitiesGrid.Visible = false;
+                GridLabel.Text = "Provinces Ranked by number of cities: ";
+                PopModal();
+            }
+            else
+            {
+                ShowError();
+            }
         }
     }
 }
