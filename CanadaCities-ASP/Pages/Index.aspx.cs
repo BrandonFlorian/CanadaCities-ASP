@@ -20,51 +20,34 @@ namespace CanadaCities_ASP.Pages
         private string FileName = string.Empty;
         #endregion
 
+        #region Events
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if(statistics != null)
+                if (statistics != null)
                 {
-                    statistics = new Statistics($"D:\\School\\CanadaCities-ASP\\CanadaCities-ASP\\CanadaCities-ASP\\Data\\{FileName}", FileType);
+                    statistics = new Statistics(Server.MapPath($"\\Data\\{FileName}"), FileType);
                 }
-                
+
                 BindGrids();
             }
         }
 
-        //public void GetCities()
-        //{
-        //    List<CityInfo> cities = new List<CityInfo>();
-        //    foreach (KeyValuePair<string, CityInfo> kvp in Statistics.CityCatalogue)
-        //    {
-        //        CitiesList.Add(kvp.Value);
-        //    }
-        //}
         protected void BindGrids()
         {
-            if(CitiesList.Count > 0)
+            if (CitiesList.Count > 0)
             {
                 CitiesGrid.DataSource = CitiesList;
                 CitiesGrid.DataBind();
             }
-            if(ProvinceList.Count > 0)
+            if (ProvinceList.Count > 0)
             {
                 ProvincesGrid.DataSource = ProvinceList;
                 ProvincesGrid.DataBind();
             }
         }
-
-        private void ShowError()
-        {
-            ErrorLabel.Text = "*Must Select a file type!";
-            ErrorLabel.CssClass += "text-danger ";
-            ErrorLabel.Visible = true;
-        }
-
-        #region Events
-
-
         protected void DisplayCitiesButton_OnClick(object sender, EventArgs e)
         {
 
@@ -142,7 +125,6 @@ namespace CanadaCities_ASP.Pages
            
         }
 
-        #endregion
 
         protected void ComparePopulationsButton_Click(object sender, EventArgs e)
         {
@@ -161,7 +143,7 @@ namespace CanadaCities_ASP.Pages
             {
                 ShowError();
             }
-            
+
         }
 
         protected void FileTypeRadioList_SelectedIndexChanged(object sender, EventArgs e)
@@ -179,15 +161,11 @@ namespace CanadaCities_ASP.Pages
                     FileName = "Canadacities.csv";
                     break;
             }
-            statistics = new Statistics($"D:\\School\\CanadaCities-ASP\\CanadaCities-ASP\\CanadaCities-ASP\\Data\\{FileName}", FileType);
+            statistics = new Statistics(Server.MapPath($"\\Data\\{FileName}"), FileType);
             ErrorLabel.Visible = false;
         }
 
-        private void PopModal()
-        {
-            ErrorLabel.Visible = false;
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true);
-        }
+
 
         protected void ProvincesByPopulation_Click(object sender, EventArgs e)
         {
@@ -204,8 +182,6 @@ namespace CanadaCities_ASP.Pages
             {
                 ShowError();
             }
-
-
         }
 
         protected void ProvincesByCities_Click(object sender, EventArgs e)
@@ -224,5 +200,23 @@ namespace CanadaCities_ASP.Pages
                 ShowError();
             }
         }
+
+        #endregion
+
+        #region Private Methods
+        private void ShowError()
+        {
+            ErrorLabel.Text = "*Must Select a file type!";
+            ErrorLabel.CssClass += "text-danger ";
+            ErrorLabel.Visible = true;
+        }
+
+        private void PopModal()
+        {
+            ErrorLabel.Visible = false;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true);
+        }
+
+        #endregion
     }
 }
