@@ -34,7 +34,7 @@
                                 <div class="card-body bg-dark text-white">
                                     <div class="row mb-4">
                                         <div class="col-centered">
-                                            <asp:DropDownList ID="ProvincesDropDown" runat="server">
+                                            <asp:DropDownList ID="ProvincesDropDown" runat="server" CssClass="btn btn-success">
                                                 <asp:ListItem Text="Alberta" Value="Alberta"></asp:ListItem>
                                                 <asp:ListItem Text="British Columbia" Value="BC"></asp:ListItem>
                                                 <asp:ListItem Text="Saskatchewan" Value="Saskatchewan"></asp:ListItem>
