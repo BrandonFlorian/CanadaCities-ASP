@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Authors: Brandon Florian, Tristan Kornacki, Ryan Fisher
+ * File: CityDto.cs
+ * Purpose: Enum values for provinces.
+ * Date: Feb 16, 2020
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,6 +13,7 @@ namespace CanadaCities_ASP.Classes
 {
     public enum Provinces
     {
+        Unselected = -1,
         Alberta = 0,
         BC = 1,
         Saskatchewan = 2,

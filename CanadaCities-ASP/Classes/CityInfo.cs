@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Authors: Brandon Florian, Tristan Kornacki, Ryan Fisher
+ * File: CityInfo.cs
+ * Purpose: Class for holding City info
+ * Date: Feb 16, 2020
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

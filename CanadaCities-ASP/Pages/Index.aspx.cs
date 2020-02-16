@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Authors: Brandon Florian, Tristan Kornacki, Ryan Fisher
+ * File: Index.aspx.cs
+ * Purpose: Codebehind for index page
+ * Date: Feb 16, 2020
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,6 +28,12 @@ namespace CanadaCities_ASP.Pages
 
         #region Events
 
+
+        /// <summary>
+        /// Fires on page load.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -35,6 +47,9 @@ namespace CanadaCities_ASP.Pages
             }
         }
 
+        /// <summary>
+        /// Binds the grids to their data sources.
+        /// </summary>
         protected void BindGrids()
         {
             if (CitiesList.Count > 0)
@@ -48,6 +63,12 @@ namespace CanadaCities_ASP.Pages
                 ProvincesGrid.DataBind();
             }
         }
+
+        /// <summary>
+        /// Displays the information for an entered city.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void DisplayCitiesButton_OnClick(object sender, EventArgs e)
         {
 
@@ -67,6 +88,11 @@ namespace CanadaCities_ASP.Pages
             }
         }
 
+        /// <summary>
+        /// Gets the distance between two cities.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void CalculateDistanceButton_OnClick(object sender, EventArgs e)
         {
             double distance = 0.0;
@@ -86,6 +112,11 @@ namespace CanadaCities_ASP.Pages
             //show distance
         }
 
+        /// <summary>
+        /// Displays one of three options for a selected province (Largest city, smallest city, Total population).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void DisplayProvinceButton_Click(object sender, EventArgs e)
         {
             string method = ProvincialMethodChoice.SelectedValue;
@@ -125,7 +156,11 @@ namespace CanadaCities_ASP.Pages
            
         }
 
-
+        /// <summary>
+        /// Displays the larger of two cities.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void ComparePopulationsButton_Click(object sender, EventArgs e)
         {
             if (FileTypeRadioList.SelectedIndex != -1 && !string.IsNullOrWhiteSpace(OriginCityTextBox.Text) && !string.IsNullOrWhiteSpace(DestinationCityTextBox.Text))
@@ -146,6 +181,11 @@ namespace CanadaCities_ASP.Pages
 
         }
 
+        /// <summary>
+        /// Instantiates the Statistics class with the chosen file type.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void FileTypeRadioList_SelectedIndexChanged(object sender, EventArgs e)
         {
             FileType = FileTypeRadioList.SelectedValue;
@@ -166,7 +206,11 @@ namespace CanadaCities_ASP.Pages
         }
 
 
-
+        /// <summary>
+        /// Displays the provinces ranked by population.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void ProvincesByPopulation_Click(object sender, EventArgs e)
         {
             if (FileTypeRadioList.SelectedIndex != -1)
@@ -184,6 +228,11 @@ namespace CanadaCities_ASP.Pages
             }
         }
 
+        /// <summary>
+        /// Displays the provinces ranked by total cities.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void ProvincesByCities_Click(object sender, EventArgs e)
         {
             if (FileTypeRadioList.SelectedIndex != -1)
@@ -204,6 +253,10 @@ namespace CanadaCities_ASP.Pages
         #endregion
 
         #region Private Methods
+
+        /// <summary>
+        /// Displays the error label when a file type has not been selected.
+        /// </summary>
         private void ShowError()
         {
             ErrorLabel.Text = "*Must Select a file type!";
@@ -211,6 +264,9 @@ namespace CanadaCities_ASP.Pages
             ErrorLabel.Visible = true;
         }
 
+        /// <summary>
+        /// Pops the modal.
+        /// </summary>
         private void PopModal()
         {
             ErrorLabel.Visible = false;

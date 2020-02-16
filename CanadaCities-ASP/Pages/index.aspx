@@ -20,14 +20,12 @@
                     </div>
                 </div>
                 <div class="form-check-inline">
-
                     <asp:RadioButtonList ID="FileTypeRadioList" runat="server" CssClass="form-check-input" OnSelectedIndexChanged="FileTypeRadioList_SelectedIndexChanged">
                         <asp:ListItem Text="CSV" Value="CSV"></asp:ListItem>
                         <asp:ListItem Text="JSON" Value="JSON"></asp:ListItem>
                         <asp:ListItem Text="XML" Value="XML"></asp:ListItem>
                     </asp:RadioButtonList>
                 </div>
-
                 <div class="mt-4">
                     <div class="row">
                         <div class="col-centered">
@@ -62,7 +60,6 @@
                                             </asp:RadioButtonList>
                                         </div>
                                     </div>
-
                                     <div class="row mt-4">
                                         <div class="col-centered">
                                             <asp:Button ID="DisplayProvinceButton" runat="server" Text="Display Province Info" OnClick="DisplayProvinceButton_Click" CssClass="btn btn-success" />
@@ -70,7 +67,6 @@
                                     </div>
                                 </div>
                                 <div class="card-footer bg-dark text-white">
-
                                     <div class="row mb-4 mt-4">
                                         <div class="col mb-4">
                                             <asp:Button ID="ProvincesByPopulation" runat="server" Text="Rank Provinces by Population" OnClick="ProvincesByPopulation_Click" CssClass="btn btn-success"></asp:Button>
@@ -82,7 +78,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-centered">
                             <div class="card" style="width: 400px">
                                 <div class="card-header bg-secondary">City Methods</div>
@@ -110,7 +105,6 @@
                                         </div>
                                         <div class="col mb-4">
                                             <asp:TextBox ID="DestinationCityTextBox" runat="server"></asp:TextBox>
-
                                         </div>
                                     </div>
                                     <div class="row mb-4 mt-4">
@@ -126,7 +120,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="modal bg-dark" id="infoModal" style="width: 800px; height: 800px;">
                     <div class="modal-header">
                         <button type="button" class="close text-white" data-dismiss="modal">X</button>
@@ -135,7 +128,6 @@
                         <div class="card" style="width: 700px">
                             <div class="card-header bg-secondary">
                                 <h3>Info Card</h3>
-
                             </div>
                             <div class="card-body bg-dark text-white">
                                 <div class="row">
@@ -158,6 +150,4 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
-
-
 </asp:Content>

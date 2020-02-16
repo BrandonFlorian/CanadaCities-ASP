@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Authors: Brandon Florian, Tristan Kornacki, Ryan Fisher
+ * File: CityDto.cs
+ * Purpose: Class for serializing WorldCities data into
+ * Date: Feb 16, 2020
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +13,6 @@ using System.Threading.Tasks;
 
 namespace CanadaCities_ASP.Classes
 {
-    /// <summary>
-    /// Class for parsing the raw WorldCities data into
-    /// </summary>
     [Serializable]
     public class CityDto 
     {

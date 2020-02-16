@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Authors: Brandon Florian, Tristan Kornacki, Ryan Fisher
+ * File: CityDto.cs
+ * Purpose: Class for getting city statistics and informational comparisons.
+ * Date: Feb 16, 2020
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

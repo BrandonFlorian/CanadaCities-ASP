@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Authors: Brandon Florian, Tristan Kornacki, Ryan Fisher
+ * File: DataModeler.cs
+ * Purpose: Class for parsing file types
+ * Date: Feb 16, 2020
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -43,7 +49,6 @@ namespace CanadaCities_ASP.Classes
 
         /// <summary>
         /// Parses a csv into a Dictionary<string, CityInfo>
-        /// NOTE: Since the file is small this will work for now, however this reads the entire file into memory because of the .ToList() call.
         /// </summary>
         /// <param name="filename">a string representing the path of the file</param>
         public void ParseCSV(string filename)
