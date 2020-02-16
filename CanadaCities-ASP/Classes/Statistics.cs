@@ -83,7 +83,6 @@ namespace CanadaCities_ASP.Classes
             }
 
             return largestCity;
-
         }
 
         /// <summary>
@@ -117,7 +116,6 @@ namespace CanadaCities_ASP.Classes
         /// <returns></returns>
         public CityInfo CompareCitiesPopulation(string city1, string city2)
         {
-            //this method will need some error checking on the passed in string
             CityInfo cityA;
             CityInfo cityB;
             if (CityCatalogue.TryGetValue(city1, out cityA) && CityCatalogue.TryGetValue(city2, out cityB))
@@ -128,6 +126,7 @@ namespace CanadaCities_ASP.Classes
                     return cityB;
 
             }
+
             return null;
         }
 
@@ -210,6 +209,7 @@ namespace CanadaCities_ASP.Classes
                     cityList.Add(kvp.Value);
                 }
             }
+
             return cityList;
         }
 
@@ -271,6 +271,7 @@ namespace CanadaCities_ASP.Classes
 
             return provinceTotals;
         }
+
         #endregion
     }
 }

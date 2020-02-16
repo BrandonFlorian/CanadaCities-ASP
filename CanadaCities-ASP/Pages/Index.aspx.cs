@@ -74,10 +74,11 @@ namespace CanadaCities_ASP.Pages
 
             if(FileTypeRadioList.SelectedIndex != -1 && !string.IsNullOrWhiteSpace(CityTextBox.Text))
             {
+                string city = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(CityTextBox.Text.ToLower());
                 CitiesList = new List<CityInfo>();
-                CitiesList.Add(statistics.DisplayCityInformation(CityTextBox.Text));
+                CitiesList.Add(statistics.DisplayCityInformation(city));
                 BindGrids();
-                GridLabel.Text = $"City Info for {CityTextBox.Text}: ";
+                GridLabel.Text = $"City Info for {city}: ";
                 CitiesGrid.Visible = true;
                 ProvincesGrid.Visible = false;
                 PopModal();
@@ -98,8 +99,10 @@ namespace CanadaCities_ASP.Pages
             double distance = 0.0;
             if (FileTypeRadioList.SelectedIndex != -1 && !string.IsNullOrWhiteSpace(OriginCityTextBox.Text) && !string.IsNullOrWhiteSpace(DestinationCityTextBox.Text))
             {
-                distance = statistics.CalculateDistanceBetweenCities(OriginCityTextBox.Text, DestinationCityTextBox.Text);
-                GridLabel.Text = $"From {OriginCityTextBox.Text} to {DestinationCityTextBox.Text} - Distance = {distance} KM";
+                string origin = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(OriginCityTextBox.Text.ToLower());
+                string destination = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(DestinationCityTextBox.Text.ToLower());
+                distance = statistics.CalculateDistanceBetweenCities(origin, destination);
+                GridLabel.Text = $"From {origin} to {destination} - Distance = {distance} KM";
                 CitiesGrid.Visible = false;
                 ProvincesGrid.Visible = false;
                 PopModal();
@@ -108,8 +111,6 @@ namespace CanadaCities_ASP.Pages
             {
                 ShowError();
             }
-
-            //show distance
         }
 
         /// <summary>
@@ -132,6 +133,7 @@ namespace CanadaCities_ASP.Pages
                         GridLabel.Text = $"Largest population city in {ProvincesDropDown.SelectedItem.ToString()}: ";
                         CitiesGrid.Visible = true;
                         ProvincesGrid.Visible = false;
+                        PopModal();
                         break;
                     case "Smallest":
                         CitiesList.Add(statistics.DisplaySmallestPopulation(ProvincesDropDown.SelectedItem.ToString()));
@@ -139,14 +141,16 @@ namespace CanadaCities_ASP.Pages
                         GridLabel.Text = $"Smallest population city in {ProvincesDropDown.SelectedItem.ToString()}: ";
                         CitiesGrid.Visible = true;
                         ProvincesGrid.Visible = false;
+                        PopModal();
                         break;
                     case "TotalPop":
                         GridLabel.Text = $"Total Population of {ProvincesDropDown.SelectedItem.ToString()} is {statistics.DisplayProvincePopulation(ProvincesDropDown.SelectedItem.ToString())}";
                         CitiesGrid.Visible = false;
                         ProvincesGrid.Visible = false;
+                        PopModal();
                         break;
                 }
-                PopModal();
+                
             }
             else
             {
@@ -165,10 +169,12 @@ namespace CanadaCities_ASP.Pages
         {
             if (FileTypeRadioList.SelectedIndex != -1 && !string.IsNullOrWhiteSpace(OriginCityTextBox.Text) && !string.IsNullOrWhiteSpace(DestinationCityTextBox.Text))
             {
+                string origin = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(OriginCityTextBox.Text.ToLower());
+                string destination = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(DestinationCityTextBox.Text.ToLower());
                 CitiesList = new List<CityInfo>();
-                CitiesList.Add(statistics.CompareCitiesPopulation(OriginCityTextBox.Text, DestinationCityTextBox.Text));
+                CitiesList.Add(statistics.CompareCitiesPopulation(origin, destination));
                 BindGrids();
-                GridLabel.Text = $"Larger City between : {OriginCityTextBox.Text} and {DestinationCityTextBox.Text}: ";
+                GridLabel.Text = $"Larger City between : {origin} and {destination}: ";
 
                 CitiesGrid.Visible = true;
                 ProvincesGrid.Visible = false;

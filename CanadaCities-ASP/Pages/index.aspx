@@ -120,7 +120,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal bg-dark" id="infoModal" style="width: 800px; height: 800px;">
+                <div class="modal bg-dark info-modal" id="infoModal" style="width: 800px; height: 800px;">
                     <div class="modal-header">
                         <button type="button" class="close text-white" data-dismiss="modal">X</button>
                     </div>
@@ -151,3 +151,4 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
+
