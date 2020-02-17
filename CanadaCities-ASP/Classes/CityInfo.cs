@@ -44,6 +44,10 @@ namespace CanadaCities_ASP.Classes
             Population = Int32.Parse(city.population);
             CityId = city.id;
         }
+        public CityInfo()
+        {
+
+        }
 
         public CityInfo()
         {
