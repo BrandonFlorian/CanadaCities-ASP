@@ -15,6 +15,8 @@ using CsvHelper;
 using System.Xml.Serialization;
 using System.IO;
 using System.Globalization;
+using System.Xml.Linq;
+using System.Xml;
 
 namespace CanadaCities_ASP.Classes
 {
@@ -43,7 +45,31 @@ namespace CanadaCities_ASP.Classes
 
         public void ParseXML(string filename)
         {
-           
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(filename);
+                XmlNodeList nodeList = doc.DocumentElement.ChildNodes;
+                foreach (XmlNode node in nodeList)
+                {
+                    XmlNodeList children = node.ChildNodes;
+                    CityInfo city = new CityInfo();
+                    city.CityName = children.Item(0).InnerText;
+                    city.CityAscii = children.Item(1).InnerText;
+                    city.Latitude = double.Parse(children.Item(2).InnerText);
+                    city.Longitude = double.Parse(children.Item(3).InnerText);
+                    city.Country = children.Item(4).InnerText;
+                    city.Province = children.Item(5).InnerText;
+                    city.Capital = children.Item(6).InnerText;
+                    city.Population = int.Parse(children.Item(7).InnerText);
+                    city.CityId = int.Parse(children.Item(8).InnerText);
+                    CityCatalogue.Add(city.CityName, city);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
         }
 

@@ -10,10 +10,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CanadaCities_ASP.Classes
 {
     [Serializable]
+    [XmlRoot("CanadaCities")]
     public class CityDto 
     {
         public string city { get; set; }
