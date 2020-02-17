@@ -49,11 +49,6 @@ namespace CanadaCities_ASP.Classes
 
         }
 
-        public CityInfo()
-        {
-
-        }
-
         /// <summary>
         /// Gets the province associated with the city.
         /// </summary>
